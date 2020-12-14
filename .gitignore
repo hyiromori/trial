@@ -1,0 +1,10 @@
+# Node.js
+**/node_modules/**
+
+# Rust
+**/target/**
+**/*.rs.bk
+
+# Scratch
+scratch/**
+!scratch/clean.sh
