@@ -6,7 +6,7 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "start": "nodemon './index.js' --watch './src'"
+    "start": "nodemon 'index.js' --watch './src'"
   },
   "author": "hyiromori",
   "license": "MIT",
