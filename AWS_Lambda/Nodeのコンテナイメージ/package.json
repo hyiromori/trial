@@ -1,0 +1,14 @@
+{
+  "name": "example-container-image-on-lambda",
+  "author": "hyiromori",
+  "description": "https://zenn.dev/hyiromori/scraps/9b1252a831af15",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "docker build -t container-image-on-lambda ."
+  },
+  "license": "MIT",
+  "dependencies": {
+    "uuid": "^8.3.1"
+  }
+}
