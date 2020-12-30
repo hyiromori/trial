@@ -1,0 +1,20 @@
+{
+  "name": "ast",
+  "version": "1.0.0",
+  "description": "AST Example",
+  "private": true,
+  "scripts": {
+    "parse": "node parse.js",
+    "convert": "node convert.js",
+    "unparse": "node unparse.js",
+    "test": "echo 'const a = 1 + 2; console.log(a);' | npm -s run parse | npm -s run convert | npm -s run unparse"
+  },
+  "author": "hyiromori",
+  "license": "ISC",
+  "dependencies": {
+    "acorn": "^7.1.0",
+    "escodegen": "^1.12.0",
+    "espurify": "^2.0.1",
+    "estraverse": "^4.3.0"
+  }
+}
