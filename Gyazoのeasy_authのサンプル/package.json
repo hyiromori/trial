@@ -1,0 +1,17 @@
+{
+  "name": "gyazo_easy_auth",
+  "private": true,
+  "version": "1.0.0",
+  "license": "MIT",
+  "engines": {
+    "node": "14.0.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "hyiromori",
+  "dependencies": {
+    "form-data": "^3.0.0",
+    "node-fetch": "^2.6.1"
+  }
+}
