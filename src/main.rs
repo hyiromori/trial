@@ -1,20 +1,21 @@
-// use std::env;
-use std::collections::HashMap;
+use std::env;
 
-// ISSUE_ID="$1"
-// URL="https://sentry.io/api/0/issues/${ISSUE_ID}/events/?full=true"
-// curl -H "${AUTHORIZATION_HEADER}" "${URL}"
+fn get_sentry_auth_token() -> String {
+    match env::var("SENTRY_AUTH_TOKEN") {
+        Ok(val) => format!("Bearer {}", val),
+        Err(_e) => "".to_string(),
+    }
+}
 
-// fn get_sentry_auth_token() -> String {
-//     match env::var("SENTRY_AUTH_TOKEN") {
-//         Ok(val) => val,
-//         Err(_e) => "".to_string(),
-//     }
-// }
-
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let resp = reqwest::blocking::get("https://httpbin.org/ip")?
-        .json::<HashMap<String, String>>()?;
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let client = reqwest::Client::new();
+    let url = "https://sentry.io/api/0/issues/1197906478/events/";
+    let resp = client.get(url).header("Authorization", get_sentry_auth_token())
+        .send()
+        .await?
+        .text()
+        .await?;
     println!("{:#?}", resp);
     Ok(())
 }
