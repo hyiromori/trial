@@ -1,21 +1,28 @@
 use std::env;
+use serde::{Deserialize};
 
-fn get_sentry_auth_token() -> String {
+fn get_authorization_header_for_sentry() -> String {
     match env::var("SENTRY_AUTH_TOKEN") {
         Ok(val) => format!("Bearer {}", val),
         Err(_e) => "".to_string(),
     }
 }
 
+#[derive(Deserialize, Debug)]
+struct Data {
+    id: String,
+}
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let client = reqwest::Client::new();
     let url = "https://sentry.io/api/0/issues/1197906478/events/";
-    let resp = client.get(url).header("Authorization", get_sentry_auth_token())
+    let data = reqwest::Client::new()
+        .get(url)
+        .header("Authorization", get_authorization_header_for_sentry())
         .send()
         .await?
-        .text()
+        .json::<Vec<Data>>()
         .await?;
-    println!("{:#?}", resp);
+    println!("{:?}", data);
     Ok(())
 }
