@@ -1,6 +1,6 @@
 mod sentry_data;
-use std::env;
 use crate::sentry_data::EventData;
+use std::env;
 
 fn get_authorization_header_for_sentry() -> String {
     match env::var("SENTRY_AUTH_TOKEN") {
