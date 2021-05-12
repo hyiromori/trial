@@ -3,5 +3,5 @@
 ## Development
 
 ```bash
-$ make dev
+$ cargo watch -x run
 ```
