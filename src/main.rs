@@ -1,9 +1,10 @@
-mod sentry_data;
-mod user_info;
+use std::env;
 
 use crate::sentry_data::EventData;
-use crate::user_info::get_user_info_summary;
-use std::env;
+use crate::user_info::get_ip_addresses_summary;
+
+mod sentry_data;
+mod user_info;
 
 fn get_authorization_header_for_sentry() -> String {
     // https://sentry.io/settings/account/api/auth-tokens/
@@ -23,7 +24,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?
         .json::<Vec<EventData>>()
         .await?;
-    let user_info = get_user_info_summary(&data);
-    println!("{:?}", user_info);
+    let ip_addresses_summary = get_ip_addresses_summary(&data);
+    println!("{:?}", ip_addresses_summary);
     Ok(())
 }
