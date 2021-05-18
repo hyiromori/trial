@@ -1,46 +1,46 @@
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
-struct Tag {
-    key: String,
-    value: String,
+pub struct Tag {
+    pub key: String,
+    pub value: String,
 }
 
 #[derive(Deserialize, Debug)]
-struct UserData {
+pub struct UserData {
     #[allow(non_snake_case)]
-    isStaff: Option<bool>,
+    pub isStaff: Option<bool>,
 }
 
 #[derive(Deserialize, Debug)]
-struct User {
-    username: Option<String>,
-    name: Option<String>,
-    ip_address: Option<String>,
-    email: Option<String>,
-    data: Option<UserData>,
-    id: Option<String>,
+pub struct User {
+    pub username: Option<String>,
+    pub name: Option<String>,
+    pub ip_address: Option<String>,
+    pub email: Option<String>,
+    pub data: Option<UserData>,
+    pub id: Option<String>,
 }
 
 #[derive(Deserialize, Debug)]
-struct Event {
-    r#type: Option<String>,
+pub struct Event {
+    pub r#type: Option<String>,
 }
 
 // Ref: https://docs.sentry.io/api/events/list-an-issues-events/
 #[derive(Deserialize, Debug)]
 pub struct EventData {
     #[allow(non_snake_case)]
-    eventID: String,
-    tags: Vec<Tag>,
+    pub eventID: String,
+    pub tags: Vec<Tag>,
     #[allow(non_snake_case)]
-    dateCreated: String,
-    user: User,
+    pub dateCreated: String,
+    pub user: User,
     message: String,
-    id: String,
-    platform: String,
-    event: Option<Event>,
+    pub id: String,
+    pub platform: String,
+    pub event: Option<Event>,
     #[allow(non_snake_case)]
-    groupID: String,
-    title: String,
+    pub groupID: String,
+    pub title: String,
 }
