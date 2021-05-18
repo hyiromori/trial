@@ -1,3 +1,4 @@
+#![allow(non_snake_case)]
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
@@ -8,7 +9,6 @@ pub struct Tag {
 
 #[derive(Deserialize, Debug)]
 pub struct UserData {
-    #[allow(non_snake_case)]
     pub isStaff: Option<bool>,
 }
 
@@ -30,17 +30,14 @@ pub struct Event {
 // Ref: https://docs.sentry.io/api/events/list-an-issues-events/
 #[derive(Deserialize, Debug)]
 pub struct EventData {
-    #[allow(non_snake_case)]
     pub eventID: String,
     pub tags: Vec<Tag>,
-    #[allow(non_snake_case)]
     pub dateCreated: String,
     pub user: User,
-    message: String,
+    pub message: String,
     pub id: String,
     pub platform: String,
     pub event: Option<Event>,
-    #[allow(non_snake_case)]
     pub groupID: String,
     pub title: String,
 }

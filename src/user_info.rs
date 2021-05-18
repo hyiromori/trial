@@ -1,27 +1,24 @@
-use crate::sentry_data::EventData;
 use std::collections::HashMap;
+use std::option::Option;
 
 #[derive(Debug)]
 pub struct SummaryData {
     count: i32,
     value: String,
 }
-impl SummaryData {
-    fn increment(&mut self) {
-        self.count = self.count + 1;
-    }
+
+pub fn show_summary_data(title: String, data: &Vec<Option<String>>) -> () {
+    println!("[{}]", title);
+    get_summary_data(data).iter().for_each(|summary| {
+        println!("{:>3}: {}", summary.count, summary.value);
+    });
 }
 
-#[derive(Debug)]
-pub struct UserInfo {
-    pub ip_addresses: Vec<String>,
-}
-
-pub fn get_ip_addresses_summary(event_data_list: &Vec<EventData>) -> Vec<SummaryData> {
-    let mut ip_addresses_summary: Vec<SummaryData> = event_data_list
+pub fn get_summary_data(data: &Vec<Option<String>>) -> Vec<SummaryData> {
+    let mut summaries: Vec<SummaryData> = data
         .iter()
         .map(|data| -> String {
-            match &data.user.ip_address {
+            match &data {
                 Some(val) => String::from(val),
                 None => "".to_string(),
             }
@@ -41,6 +38,6 @@ pub fn get_ip_addresses_summary(event_data_list: &Vec<EventData>) -> Vec<Summary
         })
         .collect();
 
-    ip_addresses_summary.sort_by(|a, b| b.count.cmp(&a.count)); // DESC
-    ip_addresses_summary
+    summaries.sort_by(|a, b| b.count.cmp(&a.count)); // DESC
+    summaries
 }

@@ -1,7 +1,7 @@
 use std::env;
 
 use crate::sentry_data::EventData;
-use crate::user_info::get_ip_addresses_summary;
+use crate::user_info::show_summary_data;
 
 mod sentry_data;
 mod user_info;
@@ -24,7 +24,23 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?
         .json::<Vec<EventData>>()
         .await?;
-    let ip_addresses_summary = get_ip_addresses_summary(&data);
-    println!("{:?}", ip_addresses_summary);
+
+    println!();
+    let ip_address_list: Vec<Option<String>> = data.iter().map(|d| {
+        match &d.user.ip_address {
+            Some(val) => Some(val.clone()),
+            None => None,
+        }
+    }).collect();
+    show_summary_data(String::from("IP Addresses"), &ip_address_list);
+
+    println!();
+    let platform_list: Vec<Option<String>> = data
+        .iter()
+        .map(|d| Some(String::from(&d.platform)))
+        .collect();
+    show_summary_data(String::from("Platform"), &platform_list);
+
+    println!();
     Ok(())
 }
