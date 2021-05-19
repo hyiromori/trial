@@ -4,7 +4,7 @@ use std::option::Option;
 #[derive(Debug)]
 pub struct SummaryData {
     count: i32,
-    value: String,
+    pub(crate) value: String,
 }
 
 pub fn show_summary_data(title: String, data: &Vec<Option<String>>) -> () {
