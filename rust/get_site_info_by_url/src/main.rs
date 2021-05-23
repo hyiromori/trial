@@ -77,22 +77,34 @@ fn site_image_url(metas: &Vec<Node>) -> Option<String> {
     }
 }
 
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let url = "https://zenn.dev/mryhryki/articles/2021-05-16-update-aws-lambda-fast";
+struct SiteInfo {
+    title: Option<String>,
+    image_url: Option<String>,
+}
+
+async fn get_site_info_by_url(url: &String) -> SiteInfo {
     let html = reqwest::get(url).await?.text().await?;
     let dom = Dom::parse(&html).unwrap();
     let head: Node = search_node(dom.children.first().unwrap(), &String::from("head")).unwrap();
     let metas: Vec<Node> = search_nodes(&head, &String::from("meta"));
 
-    let title: String = match search_node(&head, &String::from("title")) {
-        Some(node) => text_content(&node),
-        None => String::from(""),
-    };
-    let image_url: String = match site_image_url(&metas) {
-        Some(url) => url,
-        None => String::from(""),
-    };
+    let title_node = search_node(&head, &String::from("title"));
+    SiteInfo {
+        title: match title_node {
+            Some(node) => Some(text_content(&node)),
+            None => None,
+        },
+        image_url: site_image_url(&metas),
+    }
+}
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let url = "https://comemo.nikkei.com/n/n9a71eeda00fd?gs=434b01923607";
+    let site_info = get_site_info_by_url(&String::from(url)).await?;
+
+    let title: String = site_info.title.unwrap_or(String::from(""));
+    let image_url: String = site_info.image_url.unwrap_or(String::from(""));
 
     println!("Title[{}]", title);
     println!("Image URL[{}]", image_url);

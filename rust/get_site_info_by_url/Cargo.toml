@@ -1,5 +1,5 @@
 [package]
-name = "get_title_by_url"
+name = "get_site_info_by_url"
 version = "0.1.0"
 authors = ["mryhryki <mryhryki@gmail.com>"]
 edition = "2018"
