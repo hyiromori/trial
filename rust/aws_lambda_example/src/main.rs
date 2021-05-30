@@ -1,5 +1,7 @@
 use lambda_runtime::{handler_fn, Context, Error};
 use serde_json::{json, Value};
+use rand::{thread_rng, Rng};
+use rand::distributions::Alphanumeric;
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
@@ -8,8 +10,15 @@ async fn main() -> Result<(), Error> {
     Ok(())
 }
 
-async fn func(event: Value, _: Context) -> Result<Value, Error> {
-    let first_name = event["firstName"].as_str().unwrap_or("world");
-
-    Ok(json!({ "message": format!("Hello, {}!", first_name) }))
+async fn func(_event: Value, _context: Context) -> Result<Value, Error> {
+    Ok(json!({ "random": random() }))
 }
+
+fn random() -> String {
+    thread_rng()
+        .sample_iter(&Alphanumeric)
+        .take(30)
+        .map(char::from)
+        .collect()
+}
+
