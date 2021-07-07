@@ -430,6 +430,7 @@ name = "on_wasmer"
 version = "0.1.0"
 dependencies = [
  "wasmer",
+ "wasmer-compiler-cranelift",
 ]
 
 [[package]]
